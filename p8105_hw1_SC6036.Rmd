@@ -20,14 +20,11 @@ penguins_df
 ```{r Q1}
 skimr::skim(penguins_df)
 summary(penguins_df)
-# This data set has 3 factor variables and 3 numeric variables. A few important variable include `island`, `species`, `bill_length_mm`, `bill_depth_mm`, `body_mass_g`, `sex`, and `year`. 
 
 ncol(penguins_df)
 nrow(penguins_df)
-# The penguins data set has 344 rows and 8 columns. 
 
 mean(penguins_df$flipper_length_mm, na.rm = T)
-# The mean flipper length, after removing NA, is 200.9.
 
 ggplot(penguins_df, 
        aes(x = bill_length_mm, 
@@ -36,6 +33,7 @@ ggplot(penguins_df,
   geom_point()
 ggsave("scatterplot.png")
 ```
+This data set has 3 factor variables and 3 numeric variables. A few important variable include `island`, `species`, `bill_length_mm`, `bill_depth_mm`, `body_mass_g`, `sex`, and `year`. There are mostly Adelie species (152 total) and mostly from the island Biscoe (168 total). The penguins data set has 344 rows and 8 columns. The mean flipper length, after removing NA, is 200.9.
 
 
 # Question 2
@@ -58,5 +56,18 @@ example_df |> pull(vec_char)    |> mean()
 example_df |> pull(vec_factor)  |> mean()
 ```
 
+`vec_numeric` and `vec_logical` work with the mean function, where the first pulls the average and the second pulls the proportion of `True`. `vec_char` does not work, as it is neither numeric nor logical, therefore returning NA. Lastly, `vec_factor` does not work because a factor is neither numeric nor logical, returning NA. 
 
+```{r, eval = F}
+as.numeric(example_df$vec_logical)
+as.numeric(example_df$vec_char)
+as.numeric(example_df$vec_factor)
 
+example_df |> pull(vec_logical) |> mean()
+example_df |> pull(vec_char)    |> mean()
+example_df |> pull(vec_factor)  |> mean()
+```
+
+`vec_logical` coerces to 0 and 1 which represents T and F, so we are able to take the mean now, returning the mean. `vec_char` does not work because the values have now become NA since they were previously words and cannot become numerical, therefore returning NA. Lastly, `vec_factor` looks like it becomes numerical because the levels are given a number label, but taking the mean returns NA.
+
+This does show how character to numeric coercion does not work, and that a factor is neither numeric nor logical so the taking the mean won't work here either. 
