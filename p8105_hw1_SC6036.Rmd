@@ -49,10 +49,13 @@ example_df = tibble(
   vec_char = sample(words, 10),
   vec_factor = factor(sample(c("level 1", "level 2", "level 3"), 10, replace = T))
 )
-
 example_df
 
 # taking means of variables
+example_df |> pull(vec_numeric) |> mean()
+example_df |> pull(vec_logical) |> mean()
+example_df |> pull(vec_char)    |> mean()
+example_df |> pull(vec_factor)  |> mean()
 ```
 
 
