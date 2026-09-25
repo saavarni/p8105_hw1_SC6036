@@ -3,20 +3,21 @@ title: "p8105_hw1_SC6036"
 output: github_document
 date: "2026-09-25"
 ---
-# Loading Library
-```{r}
+## Loading Library
+```{r loading library}
 library(palmerpenguins)
+library(tidyverse)
 ```
 
-# Loading Data
-```{r}
+## Loading Data
+```{r loading data}
 data("penguins", package = "palmerpenguins")
 penguins_df <- janitor::clean_names(penguins)
 penguins_df
 ```
 
-## Question 1
-```{r}
+# Question 1
+```{r Q1}
 skimr::skim(penguins_df)
 summary(penguins_df)
 # This data set has 3 factor variables and 3 numeric variables. A few important variable include `island`, `species`, `bill_length_mm`, `bill_depth_mm`, `body_mass_g`, `sex`, and `year`. 
@@ -27,5 +28,32 @@ nrow(penguins_df)
 
 mean(penguins_df$flipper_length_mm, na.rm = T)
 # The mean flipper length, after removing NA, is 200.9.
+
+ggplot(penguins_df, 
+       aes(x = bill_length_mm, 
+           y = flipper_length_mm, 
+           color = species)) + 
+  geom_point()
+ggsave("scatterplot.png")
 ```
+
+
+# Question 2
+```{r Q2}
+set.seed(1)
+# setting seed for reproducibility and creating data frame
+
+example_df = tibble(
+  vec_numeric = rnorm(10),
+  vec_logical = vec_numeric > 0,
+  vec_char = sample(words, 10),
+  vec_factor = factor(sample(c("level 1", "level 2", "level 3"), 10, replace = T))
+)
+
+example_df
+
+# taking means of variables
+```
+
+
 
